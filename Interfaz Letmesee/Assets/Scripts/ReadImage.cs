@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class ReadImage : MonoBehaviour
 {
-
+    #region Variables
     [SerializeField]
     private Texture2D[] images;
-    private Texture2D image;
+    
+    
+    //private Texture2D image;
 
 
     [SerializeField]
@@ -15,11 +18,113 @@ public class ReadImage : MonoBehaviour
     [SerializeField]
     private GameObject wallObject;
 
+    private string imagesDir = "/LevelImages";
+    #endregion
+
     // Start is called before the first frame update
     private void Start()
     {
 
-        image = images[Random.Range(0, images.Length)];
+        string dataPath = Application.persistentDataPath;
+        
+        
+        //string fileName = "Image1.png";
+
+
+
+        imagesDir = dataPath + imagesDir;
+
+
+
+        //fileName = imagesDir + "/" + fileName;
+
+        if (Directory.Exists(imagesDir))
+        {
+
+            string[] filesFound = Directory.GetFiles(imagesDir);
+            if (filesFound.Length > 0)
+            {
+                images = new Texture2D[filesFound.Length];
+                int counter = 0;
+
+                foreach (string fileAndPath in filesFound)
+                {
+
+                    string fileName = fileAndPath.Substring(fileAndPath.LastIndexOf('\\')+1);
+                    string filePath = imagesDir + "/" + fileName;
+
+                    if (File.Exists (filePath))
+                    {
+                        byte[] imageData = File.ReadAllBytes(filePath);
+                        Texture2D tex = new Texture2D(1, 1);
+                        tex.LoadImage(imageData);
+                        images[counter] = tex;
+                        counter++;
+                       
+                    }
+                    else
+                    {
+                        Debug.Log("file does not Exists");
+                    }
+
+                    Debug.Log("File and Path: " + filePath);
+                }
+                GenerateWorld(images[Random.Range(0, images.Length)]);
+            }
+            else
+            {
+
+            }
+
+            //if (File.Exists(fileName))
+            //{
+            //byte[] imageData = File.ReadAllBytes(fileName);
+            //Texture2D tex = new Texture2D(1, 1);
+            //tex.LoadImage(imageData);
+            //GenerateWorld(tex);
+            //}
+            //else
+            //{
+            //Debug.Log("file not found: " + fileName);
+            //}
+
+
+
+        }
+        else
+        {
+            Debug.Log("Dir not found: " + imagesDir);
+        }
+
+
+        //if (File.Exists(fileName))
+        //{
+        //    Debug.Log("file Exists");
+        //}
+        //else
+        //{
+        //    Debug.Log("file does not Exists");
+        //}
+
+        //if (Directory.Exists(imagesDir))
+        //{
+        //    Debug.Log("Directory Exists");
+        //}
+        //else
+        //{
+        //    Debug.Log("Directory does not Exists");
+        //}
+
+        //Debug.Log(imagesDir);
+        //Debug.Log(imagesDir + "/" + fileName);
+
+        //Debug.Log(dataPath); 
+
+    }
+
+    private void GenerateWorld(Texture2D image)
+    {
+        //image = images[Random.Range(0, images.Length)];
 
         Color[] pix = image.GetPixels();
 
@@ -31,7 +136,7 @@ public class ReadImage : MonoBehaviour
         Vector3 currentSpawnPos = startingSpawnPosition;
 
         int counter = 0;
-         
+
         for (int z = 0; z < worldz; z++)
         {
             for (int x = 0; x < worldx; x++)
@@ -64,31 +169,33 @@ public class ReadImage : MonoBehaviour
 
             counter++;
         }
-        //        int black = 0;
-        //        int white = 0;
+//        int black = 0;
+//        int white = 0;
 
-        //        foreach (Color c in pix)
-        //        {
-        //            if (c.Equals(Color.white))
-        //            {
-        //                white++;
-        //            }
-        //            else if(c.Equals(Color.black))
-        //            {
-        //                black++;
-        //            }
-        //#if DEBUG
+//        foreach (Color c in pix)
+//        {
+//            if (c.Equals(Color.white))
+//            {
+//                white++;
+//            }
+//            else if (c.Equals(Color.black))
+//            {
+//                black++;
+//            }
+//#if DEBUG
 
-        //            Debug.Log("Black = " + black);
-        //            Debug.Log("White = " + white);
+//            Debug.Log("Black = " + black);
+//            Debug.Log("White = " + white);
 
 
-        //#endif
+//#endif
+//        }
     }
 
 
-    // Update is called once per frame
-    void Update()
+
+        // Update is called once per frame
+        void Update()
     {
         
     }

@@ -240,8 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0d48e8b3b9a73e49b8ac0058a3acb87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  images:
-  - {fileID: 2800000, guid: 80b52c9817965e24bbd153839c1b146a, type: 3}
+  images: []
   groundObject: {fileID: 2514205342666893769, guid: 0157a5d05ebb8be46a6a92c861b5c661,
     type: 3}
   wallObject: {fileID: 8431821677285579915, guid: 13f518a75a3e6c347abb4158dc6cff07,
