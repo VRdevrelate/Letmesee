@@ -18,7 +18,7 @@ public class ReadImage : MonoBehaviour
     [SerializeField]
     private GameObject wallObject;
 
-    private string imagesDir = "/LevelImages";
+    private string imagesDir = "/Imagen";
     #endregion
 
     // Start is called before the first frame update
@@ -160,11 +160,11 @@ public class ReadImage : MonoBehaviour
 
             if (c.Equals(Color.white))
             {
-                Instantiate(groundObject, pos, Quaternion.identity);
+                //Instantiate(wallObject, pos, Quaternion.identity);
             }
             else if (c.Equals(Color.black))
             {
-                Instantiate(wallObject, pos, Quaternion.identity);
+                Instantiate(groundObject, pos, Quaternion.identity);
             }
 
             counter++;
