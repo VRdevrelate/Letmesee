@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 [ExecuteInEditMode]
 
@@ -86,6 +87,7 @@ public class Navigator : MonoBehaviour
 
     void Update()
     {
+        OVRInput.SetControllerVibration(0.0f, 0.0f, OVRInput.Controller.RTouch);
         _wallHit = Physics.Raycast(transform.position, transform.forward, out _wallHitInfo, wallSearchDistance + ofWallDistance, cullingMask, queryTriggerInteraction);
 
         if (_wallHit)
@@ -114,8 +116,12 @@ public class Navigator : MonoBehaviour
                     Quaternion p = new Quaternion();
                     p[1] = 30f;
                     reticle.transform.SetPositionAndRotation(_targetLocation, p);
+                    OVRInput.SetControllerVibration(0.07f, 0.08f, OVRInput.Controller.RTouch);
                 }
 
+                    
+             
+                
             }
         }
 
@@ -123,6 +129,7 @@ public class Navigator : MonoBehaviour
         else
         {
             hasTargetLocation = false;
+            
         }
 
 

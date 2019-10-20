@@ -8,8 +8,8 @@ public class ReadImage : MonoBehaviour
     #region Variables
     [SerializeField]
     private Texture2D[] images;
-    
-    
+    private Texture2D[] publicImages;
+
     //private Texture2D image;
 
 
@@ -17,6 +17,8 @@ public class ReadImage : MonoBehaviour
     private GameObject groundObject;
     [SerializeField]
     private GameObject wallObject;
+    [SerializeField]
+    private GameObject plane;
 
     private string imagesDir = "/Imagen";
     #endregion
@@ -69,7 +71,16 @@ public class ReadImage : MonoBehaviour
 
                     Debug.Log("File and Path: " + filePath);
                 }
-                GenerateWorld(images[Random.Range(0, images.Length)]);
+
+
+                //GenerateWorld(images[Random.Range(0, images.Length)]);
+                GenerateWorld(images[0]);
+
+                int worldx = images[0].width;
+                int worldz = images[0].height;
+               
+                plane.gameObject.transform.localScale = new Vector3(worldx/6, 1, worldz/6);
+                
             }
             else
             {
@@ -131,9 +142,14 @@ public class ReadImage : MonoBehaviour
         int worldx = image.width;
         int worldz = image.height;
 
+        
+
+
         Vector3[] spawnPositions = new Vector3[pix.Length];
-        Vector3 startingSpawnPosition = new Vector3(-Mathf.Round(worldx / 2), 0, -Mathf.Round(worldz / 2));
+        Vector3 startingSpawnPosition = new Vector3(-Mathf.Round(worldx/2), 0, -Mathf.Round(worldz/2));
         Vector3 currentSpawnPos = startingSpawnPosition;
+
+       
 
         int counter = 0;
 
@@ -160,11 +176,11 @@ public class ReadImage : MonoBehaviour
 
             if (c.Equals(Color.white))
             {
-                //Instantiate(wallObject, pos, Quaternion.identity);
+                //Instantiate(groundObject, pos, Quaternion.identity);
             }
             else if (c.Equals(Color.black))
             {
-                Instantiate(groundObject, pos, Quaternion.identity);
+                Instantiate(wallObject, pos, Quaternion.identity);
             }
 
             counter++;
