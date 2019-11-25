@@ -17,13 +17,16 @@ public class EscuchaImagen : ReadImage
     public GameObject hablando;
     public Text registra;
     public GameObject escucha;
-   
+    public int contador;
 
     public string[] revisar;
 
     private string dialogo;
     int materialCase = 0;
-    int contador = 0;
+
+   
+    
+   
 
     public void Escuchar(string text)
     {
@@ -37,10 +40,17 @@ public class EscuchaImagen : ReadImage
         }
         if (text.Contains("siguiente imagen"))
         {
-            DestroyImmediate(escucha);
-            SceneManager.LoadScene(0);
-            contador++;
-            SceneManager.LoadScene(1);
+
+
+            if (contador + 2 > 4)
+            {
+                SceneManager.LoadScene(0);
+            }
+            else
+            {
+                SceneManager.LoadScene(contador + 2);
+            }
+            
         }
         if (text.Contains("salir"))
         {
@@ -72,6 +82,7 @@ public class EscuchaImagen : ReadImage
     // Start is called before the first frame update
     void Start()
     {
+
         ImageLoad(contador);
 
 

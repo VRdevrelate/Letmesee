@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PantallaPrincipal.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/PantallaPrincipal 1.unity
+    guid: 51bc729f0aad37347b3c82adaa7bcf04
+  - enabled: 1
+    path: Assets/Scenes/PantallaPrincipal 2.unity
+    guid: c24b61203d8f03c4da6dd8da3f8e7f03
+  - enabled: 1
+    path: Assets/Scenes/PantallaPrincipal 3.unity
+    guid: 38d762b4319cbe44dae343a797393746
   m_configObjects: {}

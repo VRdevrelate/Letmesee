@@ -313,7 +313,7 @@ MonoBehaviour:
   hablando: {fileID: 0}
   registra: {fileID: 451431465}
   escucha: {fileID: 1464533787}
-  contador: 0
+  contador: 1
   revisar: []
 --- !u!1001 &275016796
 PrefabInstance:
