@@ -34,7 +34,8 @@ public class ReadImage : MonoBehaviour
 
         //string fileName = "Image1.png";
 
-        dataPath = "E:/LETMESEE/Letmesee/Interfaz Letmesee/builds";
+        //dataPath = "E:/LETMESEE/Letmesee/Interfaz Letmesee/builds";
+        dataPath = "c:/builds";
         imagesDir = dataPath + imagesDir;
         Debug.Log(imagesDir);
         Debug.Log(imagesDir + "/");
