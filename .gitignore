@@ -4,6 +4,8 @@
 [Bb]uild/
 [Bb]uilds/
 [Oo]culus/
+[Ii]BMSdkCore/
+[Ww]atson/
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory

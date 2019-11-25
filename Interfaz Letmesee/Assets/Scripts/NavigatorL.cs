@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 [ExecuteInEditMode]
 
-public class Navigator : MonoBehaviour
+public class NavigatorL : MonoBehaviour
 {
     [Header("Ray Casting")]
     [SerializeField] float wallSearchDistance = 5;
@@ -87,15 +87,24 @@ public class Navigator : MonoBehaviour
 
     void Update()
     {
-        OVRInput.SetControllerVibration(0.0f, 0.0f, OVRInput.Controller.RTouch);
+        OVRInput.SetControllerVibration(0.0f, 0.0f, OVRInput.Controller.LTouch);
         _wallHit = Physics.Raycast(transform.position, transform.forward, out _wallHitInfo, wallSearchDistance + ofWallDistance, cullingMask, queryTriggerInteraction);
 
         if (_wallHit)
         {
             _wallHitPosition = _wallHitInfo.point;
             _wallHitNormal = _wallHitInfo.normal;
-            OVRInput.SetControllerVibration(0.07f, 0.08f, OVRInput.Controller.RTouch);
+            OVRInput.SetControllerVibration(0.07f, 0.08f, OVRInput.Controller.LTouch);
             _wallBouncePosition = _wallHitPosition + _wallHitNormal * ofWallDistance;
+            _targetLocation = _wallHitInfo.normal;
+            hasTargetLocation = true;
+            if (reticle)
+            {
+                Quaternion p = new Quaternion();
+                p[1] = 30f;
+                reticle.transform.SetPositionAndRotation(_targetLocation, p);
+                //OVRInput.SetControllerVibration(0.07f, 0.08f, OVRInput.Controller.RTouch);
+            }
         }
         else
         {
@@ -111,14 +120,14 @@ public class Navigator : MonoBehaviour
             hasTargetLocation = _navMeshHit = NavMesh.SamplePosition(_groundHitPosition, out _navMeshHitInfo, navMeshSearchDistance, NavMesh.AllAreas);
             if (_navMeshHit)
             {
-                _targetLocation = _navMeshHitInfo.position;
-                if (reticle)
-                {
-                    Quaternion p = new Quaternion();
-                    p[1] = 30f;
-                    reticle.transform.SetPositionAndRotation(_targetLocation, p);
-                    //OVRInput.SetControllerVibration(0.07f, 0.08f, OVRInput.Controller.RTouch);
-                }
+                //_targetLocation = _navMeshHitInfo.position;
+                //if (reticle)
+                //{
+                //    Quaternion p = new Quaternion();
+                //    p[1] = 30f;
+                //    reticle.transform.SetPositionAndRotation(_targetLocation, p);
+                //    //OVRInput.SetControllerVibration(0.07f, 0.08f, OVRInput.Controller.RTouch);
+                //}
 
                     
              

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class ReadImage : MonoBehaviour
 {
@@ -24,19 +25,21 @@ public class ReadImage : MonoBehaviour
     #endregion
 
     // Start is called before the first frame update
-    private void Start()
+   
+    public void ImageLoad(int mundo)
     {
-
+        
         string dataPath = Application.persistentDataPath;
-        
-        
+
+
         //string fileName = "Image1.png";
 
-
-
+        dataPath = "E:/LETMESEE/Letmesee/Interfaz Letmesee/builds";
         imagesDir = dataPath + imagesDir;
+        Debug.Log(imagesDir);
+        Debug.Log(imagesDir + "/");
 
-
+        Debug.Log(dataPath);
 
         //fileName = imagesDir + "/" + fileName;
 
@@ -52,21 +55,30 @@ public class ReadImage : MonoBehaviour
                 foreach (string fileAndPath in filesFound)
                 {
 
-                    string fileName = fileAndPath.Substring(fileAndPath.LastIndexOf('\\')+1);
+                    string fileName = fileAndPath.Substring(fileAndPath.LastIndexOf('\\') + 1);
                     string filePath = imagesDir + "/" + fileName;
 
-                    if (File.Exists (filePath))
+                    if (File.Exists(filePath))
                     {
                         byte[] imageData = File.ReadAllBytes(filePath);
                         Texture2D tex = new Texture2D(1, 1);
                         tex.LoadImage(imageData);
                         images[counter] = tex;
                         counter++;
-                       
+                        Debug.Log(imagesDir);
+                        Debug.Log(imagesDir + "/" + fileName);
+
+                        Debug.Log(dataPath);
+
                     }
                     else
                     {
                         Debug.Log("file does not Exists");
+                        Debug.Log(imagesDir);
+                        Debug.Log(imagesDir + "/" + fileName);
+
+                        Debug.Log(dataPath);
+
                     }
 
                     Debug.Log("File and Path: " + filePath);
@@ -74,13 +86,18 @@ public class ReadImage : MonoBehaviour
 
 
                 //GenerateWorld(images[Random.Range(0, images.Length)]);
-                GenerateWorld(images[0]);
-
-                int worldx = images[0].width;
-                int worldz = images[0].height;
-               
-                plane.gameObject.transform.localScale = new Vector3(worldx/6, 1, worldz/6);
+                if (mundo > (images.Length))
+                { 
+                    mundo = 0;
+                }
+                GenerateWorld(images[mundo]);
                 
+
+                int worldx = images[mundo].width;
+                int worldz = images[mundo].height;
+
+                plane.gameObject.transform.localScale = new Vector3(worldx / 6, 1, worldz / 6);
+
             }
             else
             {
@@ -126,11 +143,13 @@ public class ReadImage : MonoBehaviour
         //    Debug.Log("Directory does not Exists");
         //}
 
-        //Debug.Log(imagesDir);
-        //Debug.Log(imagesDir + "/" + fileName);
 
-        //Debug.Log(dataPath); 
+    }
 
+    private void Start()
+    {
+      
+ 
     }
 
     private void GenerateWorld(Texture2D image)
@@ -152,9 +171,10 @@ public class ReadImage : MonoBehaviour
        
 
         int counter = 0;
-
+        
         for (int z = 0; z < worldz; z++)
         {
+
             for (int x = 0; x < worldx; x++)
             {
 
@@ -163,24 +183,27 @@ public class ReadImage : MonoBehaviour
                 currentSpawnPos.x++;
 
             }
-
+            currentSpawnPos.y = 1;
             currentSpawnPos.x = startingSpawnPosition.x;
             currentSpawnPos.z++;
-
+            
         }
+        
 
         counter = 0;
         foreach (Vector3 pos in spawnPositions)
         {
             Color c = pix[counter];
 
-            if (c.Equals(Color.white))
+            if (c !=(Color.white))
             {
+                Instantiate(groundObject, pos, Quaternion.Euler(90, 0, 0));
                 //Instantiate(groundObject, pos, Quaternion.identity);
             }
             else if (c.Equals(Color.black))
             {
-                Instantiate(wallObject, pos, Quaternion.identity);
+                //Instantiate(wallObject, pos, Quaternion.Euler(90,0,0));
+                //Instantiate(wallObject, pos, Quaternion.identity);
             }
 
             counter++;
